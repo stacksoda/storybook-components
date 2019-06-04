@@ -1,5 +1,6 @@
 import React from 'react';
 import {Editor, EditorState} from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
 class SimpleExample extends React.Component {
     state = {
