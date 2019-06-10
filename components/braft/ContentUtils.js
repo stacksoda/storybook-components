@@ -20,12 +20,12 @@ export default class Demo extends React.Component {
       editorState: ContentUtils.insertText(this.state.editorState, 'Hello World!')
     })
   }
-  
+
   handleChange = (editorState) => {
     this.setState({ editorState })
   }
 
-  render () {
+  render() {
 
     const extendControls = [
       {
@@ -40,12 +40,24 @@ export default class Demo extends React.Component {
         onClick: this.insertText
       }
     ]
+    const hooks = {
+      'toggle-link': ({ href, target }) => {
+        console.log('href :', href);
+        console.log('target :', target);
+        href = href.indexOf('http') === 0 ? href : `http://${href}`
+        return { href, target }
+      },
+      'toggle-inline-style': (props) => {
+        console.log('props :', props);
+      }
+    }
 
     return (
       <BraftEditor
-       value={this.state.editorState}
-       onChange={this.handleChange}
-       extendControls={extendControls}
+        value={this.state.editorState}
+        onChange={this.handleChange}
+        extendControls={extendControls}
+        hooks={hooks}
       />
     )
 

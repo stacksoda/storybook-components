@@ -11,10 +11,10 @@ import 'draft-js/dist/Draft.css';
 export default class LinkEditorExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-      showURLInput: false,
-    }
+    // this.state = {
+    //   editorState: EditorState.createEmpty(),
+    //   showURLInput: false,
+    // }
 
     const decorator = new CompositeDecorator([
       {
@@ -22,8 +22,17 @@ export default class LinkEditorExample extends React.Component {
         component: Link,
       }
     ])
-  }
 
+    this.state = {
+      editorState: EditorState.createEmpty(decorator),
+      showURLInput: false,
+      urlValue: '',
+    };
+
+    // this.focus = () => this.refs.editor.focus();
+  }
+  
+  // 确认富文本组件选中了内容 如果选择了内容不为空 则弹出输入框
   promptForLink = e => {
     e.preventDefault();
     const {editorState} = this.state;
@@ -50,17 +59,19 @@ export default class LinkEditorExample extends React.Component {
       })
     }
   }
-
+  // 设置富文本样式到状态
   confirmLink = e => {
     e.preventDefault();
     const {editorState, urlValue} = this.state;
     const contentState = editorState.getCurrentContent();
+    console.log('urlValue :', urlValue);
     const contentStateWithEntity = contentState.createEntity(
       'LINK',
       'MUTABLE',
       {url: urlValue}
     );
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    console.log('entityKey :', entityKey);
     const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity});
     this.setState({
       editorState: RichUtils.toggleLink(
@@ -71,13 +82,23 @@ export default class LinkEditorExample extends React.Component {
       showURLInput: false,
       urlValue: '',
     }, () => {
-      setTimeout(() => this.refs.editor.focus(), 3000);
+      setTimeout(() => this.refs.editor.focus(), 1000);
     })
+  }
+  onLinkInputKeyDown = e => {
+    if (e.which === 13) {
+      this.confirmLink(e);
+    }
   }
   // 编辑器内容变化直接设置为editorState
   onChange = editorState => this.setState({editorState});
   // URL地址变化 存入state
   onURLChange = e => this.setState({urlValue: e.target.value});
+  // 打印编辑器内容状态
+  logState = () => {
+    const content = this.state.editorState.getCurrentContent();
+    console.log(convertToRaw(content));
+  }
 
   render() {
     let urlInput;

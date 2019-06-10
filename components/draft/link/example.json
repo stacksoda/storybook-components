@@ -1,0 +1,30 @@
+{
+    "blocks": [
+      {
+        "key": "84cq5",
+        "text": "www.baidu.com",
+        "type": "unstyled",
+        "depth": 0,
+        "inlineStyleRanges": [
+        ],
+        "entityRanges": [
+          {
+            "offset": 0,
+            "length": 3,
+            "key": 0
+          }
+        ],
+        "data": {
+        }
+      }
+    ],
+    "entityMap": {
+      "0": {
+        "type": "LINK",
+        "mutability": "MUTABLE",
+        "data": {
+          "url": "www.baidu.com"
+        }
+      }
+    }
+  }
