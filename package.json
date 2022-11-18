@@ -19,7 +19,7 @@
   "homepage": "https://github.com/stacksoda/storybook-components#readme",
   "devDependencies": {
     "@babel/core": "^7.4.5",
-    "@storybook/react": "^5.0.11",
+    "@storybook/react": "^6.5.13",
     "babel-loader": "^8.0.6"
   },
   "dependencies": {
